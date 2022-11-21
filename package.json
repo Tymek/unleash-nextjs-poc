@@ -1,5 +1,6 @@
 {
   "name": "feature-flags-unleash",
+  "license": "Apache-2.0",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,9 +10,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@unleash/proxy-client-react": "^3.4.1",
     "next": "canary",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "unleash-client": "^3.16.0",
+    "unleash-proxy-client": "^2.3.0"
   },
   "devDependencies": {
     "@types/node": "18.11.9",
