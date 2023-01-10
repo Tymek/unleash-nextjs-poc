@@ -6,9 +6,10 @@ export const config = {
 };
 
 export default async function handler(req: NextRequest) {
-  const auth = req.headers.get("authorization");
+  const token = req.nextUrl.searchParams.get("token");
+
   // FIXME: timing safe compare
-  if (!auth || auth !== process.env.UNLEASH_API_TOKEN) {
+  if (!token || token !== process.env.UNLEASH_API_TOKEN) {
     return new Response("Unauthorized", {
       status: 401,
       headers: {
@@ -28,7 +29,7 @@ export default async function handler(req: NextRequest) {
         "Content-Type": "application/json",
         "UNLEASH-APPNAME": appName,
         "User-Agent": appName,
-        Authorization: process.env.UNLEASH_API_TOKEN || "",
+        Authorization: token,
       },
     }
   ).then((res) => res.json());

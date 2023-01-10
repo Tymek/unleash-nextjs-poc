@@ -7,17 +7,23 @@ export const config = {
 };
 
 export default async function handler(req: NextRequest) {
+  // FIXME: add context
   const context = {};
   const protocol = req.url.startsWith("https") ? "https" : "http";
   const host = req.headers.get("host");
   const fetcherPath = addBasePath("/api/unleash/fetcher", true);
+  const token = process.env.UNLEASH_API_TOKEN || "";
 
-  const clientFeatures = await fetch(`${protocol}://${host}${fetcherPath}`, {
-    method: "GET",
-    headers: {
-      Authorization: process.env.UNLEASH_API_TOKEN || "",
-    },
-  });
+  const clientFeatures = await fetch(
+    `${protocol}://${host}${fetcherPath}?token=${token}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+  // TODO: fetch error - catch
 
   const flags = unleashResolver(await clientFeatures.json(), context);
 
