@@ -1,2 +1,3 @@
 export { unleashResolver } from "./resolver";
-export { FeatureFlagsProvider, useFlag } from "./featureFlagsProvider";
+export * from "./types";
+export { FlagProvider } from "./FlagProvider";

@@ -1,6 +1,11 @@
 import type { NextRequest } from "next/server";
 import { addBasePath } from "next/dist/client/add-base-path";
-import { unleashResolver } from "../../../unleash-nextjs";
+import {
+  UnleashFetcherResponse,
+  unleashResolver,
+  UnleashResolverResponse,
+} from "../../../unleash-nextjs";
+import { handleError } from "../../../unleash-nextjs/utils";
 
 export const config = {
   runtime: "experimental-edge",
@@ -9,29 +14,31 @@ export const config = {
 export default async function handler(req: NextRequest) {
   // FIXME: add context
   const context = {};
-  const protocol = req.url.startsWith("https") ? "https" : "http";
-  const host = req.headers.get("host");
-  const fetcherPath = addBasePath("/api/unleash/fetcher", true);
-  const token = process.env.UNLEASH_API_TOKEN || "";
 
-  const clientFeatures = await fetch(
-    `${protocol}://${host}${fetcherPath}?token=${token}`,
-    {
-      method: "GET",
+  try {
+    const clientKey = req.nextUrl.searchParams.get("clientKey") || undefined;
+    const protocol = req.url.startsWith("https") ? "https" : "http";
+    const apiPath = "/api/unleash/fetcher";
+    const serverSecret = process.env.UNLEASH_SERVER_SECRET || "";
+    const baseUrl = `${protocol}://${req.headers.get("host")}`;
+
+    const fetcherResponse: UnleashFetcherResponse = await fetch(
+      `${baseUrl}${addBasePath(apiPath, true)}?serverSecret=${serverSecret}`
+    ).then((res) => res.json());
+
+    const toggles = unleashResolver(fetcherResponse, context, clientKey);
+
+    const response: UnleashResolverResponse = {
+      toggles,
+    };
+
+    return new Response(JSON.stringify(response), {
+      status: 200,
       headers: {
-        Authorization: token,
+        "content-type": "application/json",
       },
-    }
-  );
-  // TODO: fetch error - catch
-
-  const flags = unleashResolver(await clientFeatures.json(), context);
-
-  return new Response(JSON.stringify(flags), {
-    status: 200,
-    headers: {
-      "content-type": "application/json",
-      // "cache-control": UNLEASH_CACHE_CONTROL,
-    },
-  });
+    });
+  } catch (error) {
+    return handleError(error as Error);
+  }
 }

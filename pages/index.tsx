@@ -1,5 +1,5 @@
+import { useFlag } from "@unleash/proxy-client-react";
 import { Layout, Page, Text, Link } from "@vercel/examples-ui";
-import { useFlag } from "../unleash-nextjs";
 
 export default function Home() {
   const poc = useFlag("nextjs-poc");

@@ -1,15 +1,22 @@
 import { ClientFeaturesResponse } from "unleash-client";
 import { ToggleEngine } from "unleash-on-the-edge/dist/engine/unleash-engine";
-import { UnleashClient } from "unleash-proxy-client";
+import { UnleashResolverResponse } from "./types";
+import { safeCompare } from "./utils";
 
 export const unleashResolver = (
   clientFeatures: ClientFeaturesResponse,
-  context: Record<string, any> = {}
+  context: Record<string, any> = {},
+  clientKey?: string
 ) => {
+  if (process.env.UNLEASH_CLIENT_KEY) {
+    if (!clientKey || safeCompare(clientKey, process.env.UNLEASH_CLIENT_KEY)) {
+      throw new Error("Unauthorized - clientKey missing");
+    }
+  }
+
   const engine = new ToggleEngine(clientFeatures);
 
-  const output: ConstructorParameters<typeof UnleashClient>[0]["bootstrap"] =
-    [];
+  const output: UnleashResolverResponse["toggles"] = [];
 
   clientFeatures.features.forEach((feature) => {
     const enabled = engine.isEnabled(feature.name, context);
