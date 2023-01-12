@@ -1,6 +1,7 @@
-import { useFlag } from "../vendor/proxy-client-react";
+import { useFlag } from "../vendor/other/proxy-client-react";
 import { Page, Text, Link } from "@vercel/examples-ui";
 import { FC, ReactNode } from "react";
+import { Toggle } from "./Toggle";
 
 export const SimplePage: FC<{ children?: ReactNode }> = ({ children }) => {
   const poc = useFlag("nextjs-poc");
@@ -12,15 +13,8 @@ export const SimplePage: FC<{ children?: ReactNode }> = ({ children }) => {
         <Link href="https://getunleash.io/?ref=nextjs-demo">Unleash</Link>
       </Text>
       <Text className="mb-8">
-        Flag is
-        <span
-          className={`ml-2 font-bold ${
-            poc ? "text-green-500" : "text-red-500"
-          }`}
-        >
-          {poc ? "on" : "off"}
-        </span>
-        . (<code className="font-mono">`nextjs-poc`</code>)
+        Flag is <Toggle enabled={poc} />. (
+        <code className="font-mono">`nextjs-poc`</code>)
       </Text>
       {children}
     </Page>

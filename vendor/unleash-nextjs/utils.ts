@@ -1,3 +1,9 @@
+import { addBasePath } from "next/dist/client/add-base-path";
+import { NextIncomingMessage } from "next/dist/server/request-meta";
+import { parse as parseCookies } from "cookie";
+import { NextRequest } from "next/server";
+import jsCookies from "js-cookie";
+
 /**
  * Do a constant time string comparison. Always compare the complete strings
  * against each other to get a constant time. This method does not short-cut
@@ -35,3 +41,49 @@ export const handleError = (error: Error) =>
       },
     }
   );
+
+export const parseApiEndpoint = (
+  apiEndpoint: string,
+  req?: NextIncomingMessage | NextRequest
+) => {
+  if (apiEndpoint.startsWith("http")) {
+    return apiEndpoint;
+  }
+
+  if ((req as NextIncomingMessage)?.headers?.host) {
+    const protocol = req?.url?.startsWith("https") ? "https" : "http";
+    const host = (req as NextIncomingMessage)?.headers.host;
+    return `${protocol}://${host}${addBasePath(apiEndpoint, true)}`;
+  }
+
+  if ((req as NextRequest)?.headers.get("host")) {
+    const protocol = req?.url?.startsWith("https") ? "https" : "http";
+    const host = (req as NextRequest).headers.get("host");
+    return `${protocol}://${host}${addBasePath(apiEndpoint, true)}`;
+  }
+
+  if (typeof window !== "undefined") {
+    const protocol = window?.location?.protocol;
+    const host = window?.location?.host;
+    return `${protocol}//${host}${addBasePath(apiEndpoint, true)}`;
+  }
+
+  return apiEndpoint;
+};
+
+export const getSessionCookie = (
+  req?: NextIncomingMessage | NextRequest,
+  name = "unleash-session"
+) => {
+  if (typeof window !== "undefined") {
+    return jsCookies.get(name);
+  }
+
+  if ((req as NextIncomingMessage)?.headers?.cookie) {
+    return parseCookies((req as NextIncomingMessage)?.headers?.cookie || "")?.[
+      name
+    ];
+  }
+
+  return (req as NextRequest)?.cookies.get?.(name)?.value;
+};

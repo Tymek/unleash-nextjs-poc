@@ -26,7 +26,7 @@ type IContext = IStaticContext & IMutableContext;
 
 interface IConfig extends IStaticContext {
     url: URL | string;
-    clientKey: string;
+    clientKey?: string;
     disableRefresh?: boolean;
     refreshInterval?: number;
     metricsInterval?: number;

@@ -1,25 +1,23 @@
 import { NextPage } from "next";
 import { SimplePage } from "../components/SimplePage";
-import FlagProvider from "../vendor/proxy-client-react";
-import {
-  getUnleashInitialProps,
-  UnleashInitialProps,
-} from "../vendor/unleash-nextjs/getUnleashInitialProps";
+import FlagProvider from "../vendor/other/proxy-client-react";
+import { getUnleashProps, UnleashProps } from "../vendor/unleash-nextjs";
 import { Layout } from "@vercel/examples-ui";
 
-type Props = UnleashInitialProps & {
-  customValue: string;
+type Props = UnleashProps & {
+  context: Record<string, any>;
+  anotherUnrelatedProp: string;
 };
 
 const Page: NextPage<Props> & {
   Layout: typeof Layout;
-} = ({ unleash }) => (
+} = ({ unleash, context }) => (
   <FlagProvider
     startClient={typeof window !== "undefined"}
     config={{
       bootstrap: unleash.toggles,
       url: unleash.url,
-      context: unleash.context,
+      context: context,
       refreshInterval: 7,
       bootstrapOverride: true,
       appName: "nextjs",
@@ -30,19 +28,27 @@ const Page: NextPage<Props> & {
     <SimplePage>
       Context passed to Unleash:
       <br />
-      <code>{JSON.stringify(unleash.context, null, 2)}</code>
+      <code>{JSON.stringify(context, null, 2)}</code>
     </SimplePage>
   </FlagProvider>
 );
 
 Page.getInitialProps = async (ctx) => {
-  const unleashProps = await getUnleashInitialProps(ctx);
+  const additionalContext = {
+    properties: {
+      userAgent:
+        (ctx?.req ? ctx?.req.headers["user-agent"] : navigator?.userAgent) ||
+        "",
+      // Append with any other context fields you want to pass to Unleash
+    },
+  };
 
-  // TODO: pass custom values to context
+  const unleashProps = await getUnleashProps(ctx, additionalContext);
 
   return {
     ...unleashProps,
-    customValue: "test",
+    context: additionalContext,
+    anotherUnrelatedProp: "pass initial props along",
   };
 };
 

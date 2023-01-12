@@ -1,8 +1,12 @@
 /** @format */
 
-import * as React from 'react';
-import { IConfig, UnleashClient } from '../unleash-proxy-client-js';
-import FlagContext, { IFlagContextValue } from './FlagContext';
+import * as React from "react";
+import {
+  IConfig,
+  IMutableContext,
+  UnleashClient,
+} from "../unleash-proxy-client-js";
+import FlagContext, { IFlagContextValue } from "./FlagContext";
 
 export interface IFlagProvider {
   config?: IConfig;
@@ -48,8 +52,8 @@ const FlagProvider: React.FC<React.PropsWithChildren<IFlagProvider>> = ({
 
   React.useEffect(() => {
     if (!isCallbackRegisteredRef.current) {
-      client.current.on('ready', readyCallback);
-      client.current.on('error', errorCallback);
+      client.current.on("ready", readyCallback);
+      client.current.on("error", errorCallback);
       isCallbackRegisteredRef.current = true;
     }
 
@@ -63,26 +67,28 @@ const FlagProvider: React.FC<React.PropsWithChildren<IFlagProvider>> = ({
     // stop unleash client on unmount
     return function cleanup() {
       if (client.current) {
-        client.current.off('error', errorCallback);
-        client.current.off('ready', readyCallback);
-        client.current.stop();
+        client.current.off("error", errorCallback);
+        client.current.off("ready", readyCallback);
+        client.current.stop(); // eslint-disable-line react-hooks/exhaustive-deps
       }
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const updateContext: IFlagContextValue['updateContext'] = async (context) => {
+  const updateContext: IFlagContextValue["updateContext"] = async (
+    context: IMutableContext
+  ) => {
     await client.current.updateContext(context);
   };
 
-  const isEnabled: IFlagContextValue['isEnabled'] = (toggleName) => {
+  const isEnabled: IFlagContextValue["isEnabled"] = (toggleName: string) => {
     return client.current.isEnabled(toggleName);
   };
 
-  const getVariant: IFlagContextValue['getVariant'] = (toggleName) => {
+  const getVariant: IFlagContextValue["getVariant"] = (toggleName: string) => {
     return client.current.getVariant(toggleName);
   };
 
-  const on: IFlagContextValue['on'] = (event, callback, ctx) => {
+  const on: IFlagContextValue["on"] = (event: any, callback: any, ctx: any) => {
     return client.current.on(event, callback, ctx);
   };
 

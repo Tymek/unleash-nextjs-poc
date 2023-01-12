@@ -1,40 +1,21 @@
 import { NextPage } from "next";
 import { SimplePage } from "../components/SimplePage";
-import FlagProvider, { IMutableContext } from "../vendor/proxy-client-react";
-import {
-  getUnleashInitialProps,
-  UnleashInitialProps,
-} from "../vendor/unleash-nextjs/getUnleashInitialProps";
-import { Layout } from "@vercel/examples-ui";
+import { FlagProvider } from "../vendor/unleash-nextjs/FlagProvider";
+import { getUnleashProps, UnleashProps } from "../vendor/unleash-nextjs";
 
-type Props = UnleashInitialProps;
+type Props = UnleashProps;
 
-const Page: NextPage<Props> & {
-  Layout: typeof Layout;
-} = ({ unleash }) => (
+const Page: NextPage<Props> = ({ unleash }) => (
   <FlagProvider
-    startClient={typeof window !== "undefined"}
     config={{
       bootstrap: unleash.toggles,
       url: unleash.url,
-      context: unleash.context,
-      refreshInterval: 7,
-      bootstrapOverride: true,
-      appName: "nextjs",
-      clientKey: "none",
-      disableMetrics: true,
     }}
   >
-    <SimplePage>
-      Context passed to Unleash:
-      <br />
-      <code>{JSON.stringify(unleash.context, null, 2)}</code>
-    </SimplePage>
+    <SimplePage />
   </FlagProvider>
 );
 
-Page.getInitialProps = getUnleashInitialProps;
-
-Page.Layout = Layout;
+Page.getInitialProps = async (ctx) => getUnleashProps(ctx);
 
 export default Page;

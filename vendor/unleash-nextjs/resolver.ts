@@ -1,5 +1,5 @@
-import { ClientFeaturesResponse } from "../unleash-client-node";
-import { ToggleEngine } from "../unleash-engine";
+import { ClientFeaturesResponse } from "../other/unleash-client-node";
+import { ToggleEngine } from "../other/unleash-engine";
 import { UnleashResolverResponse } from "./types";
 import { safeCompare } from "./utils";
 
