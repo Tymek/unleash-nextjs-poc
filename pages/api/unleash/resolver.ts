@@ -4,8 +4,8 @@ import {
   UnleashFetcherResponse,
   unleashResolver,
   UnleashResolverResponse,
-} from "../../../unleash-nextjs";
-import { handleError } from "../../../unleash-nextjs/utils";
+} from "../../../vendor/unleash-nextjs";
+import { handleError } from "../../../vendor/unleash-nextjs/utils";
 
 export const config = {
   runtime: "experimental-edge",

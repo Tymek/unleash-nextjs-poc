@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import pkg from "../../../package.json";
-import { unleashFetcher } from "../../../unleash-nextjs/fetcher";
-import { handleError } from "../../../unleash-nextjs/utils";
+import { unleashFetcher } from "../../../vendor/unleash-nextjs/fetcher";
+import { handleError } from "../../../vendor/unleash-nextjs/utils";
 
 export const config = {
   runtime: "experimental-edge",

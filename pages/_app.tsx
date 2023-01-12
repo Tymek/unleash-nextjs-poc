@@ -4,7 +4,8 @@ import type { LayoutProps } from "@vercel/examples-ui/layout";
 import { getLayout } from "@vercel/examples-ui";
 import { addBasePath } from "next/dist/client/add-base-path";
 import "@vercel/examples-ui/globals.css";
-import { FlagProvider, UnleashResolverResponse } from "../unleash-nextjs";
+import { UnleashResolverResponse } from "../vendor/unleash-nextjs";
+import FlagProvider from "../vendor/proxy-client-react";
 
 type MyAppProps = {
   unleash: UnleashResolverResponse & {
@@ -17,11 +18,16 @@ export default function MyApp({ Component, pageProps }: AppProps<MyAppProps>) {
 
   return (
     <FlagProvider
+      startClient={typeof window !== "undefined"}
       config={{
         bootstrap: pageProps.unleash.toggles,
         url: pageProps.unleash.url,
         context: {},
-        refreshInterval: 5,
+        refreshInterval: 7,
+        bootstrapOverride: true,
+        appName: "nextjs",
+        clientKey: "none",
+        disableMetrics: true,
       }}
     >
       <Layout

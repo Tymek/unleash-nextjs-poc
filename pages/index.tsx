@@ -1,4 +1,4 @@
-import { useFlag } from "@unleash/proxy-client-react";
+import { useFlag } from "../vendor/proxy-client-react";
 import { Layout, Page, Text, Link } from "@vercel/examples-ui";
 
 export default function Home() {
