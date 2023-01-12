@@ -1,19 +1,19 @@
-import React from 'react';
-import type { UnleashClient } from 'unleash-proxy-client';
+import React from "react";
+import type { UnleashClient } from "../unleash-proxy-client-js";
 
 export interface IFlagContextValue
   extends Pick<
     UnleashClient,
-    'on' | 'updateContext' | 'isEnabled' | 'getVariant'
+    "on" | "updateContext" | "isEnabled" | "getVariant"
   > {
   client: UnleashClient;
   flagsReady: boolean;
   setFlagsReady: React.Dispatch<
-    React.SetStateAction<IFlagContextValue['flagsReady']>
+    React.SetStateAction<IFlagContextValue["flagsReady"]>
   >;
   flagsError: any;
   setFlagsError: React.Dispatch<
-    React.SetStateAction<IFlagContextValue['flagsError']>
+    React.SetStateAction<IFlagContextValue["flagsError"]>
   >;
 }
 

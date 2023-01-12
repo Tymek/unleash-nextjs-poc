@@ -24,13 +24,14 @@ export default function Home() {
           <Link href="./ssr-only">Server-side rendering only</Link>
         </li>
         <li>
-          <Link href="./static">Static rendering (build time only)</Link>
-          {/* TODO: getStaticProps */}
+          <Link href="./static">
+            Static rendering (on build time only or ISR)
+          </Link>
         </li>
-        <li>
+        {/* TODO: use Edge middleware to A/B test by redirecting to static page */}
+        {/* <li>
           <Link href="./middleware">middleware</Link>
-          {/* TODO: use Edge middleware to A/B test by redirecting to static page */}
-        </li>
+        </li> */}
       </List>
       <Button
         className="mt-6"

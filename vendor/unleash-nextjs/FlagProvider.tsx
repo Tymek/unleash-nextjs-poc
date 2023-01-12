@@ -3,18 +3,16 @@ import { FlagProvider as ReactFlagProvider } from "../other/proxy-client-react";
 
 type Config = Required<ComponentProps<typeof ReactFlagProvider>>["config"];
 
-type RequiredProps = "url";
-
 type FlagProviderProps = {
-  config: Omit<Partial<Config>, RequiredProps> &
-    Pick<Required<Config>, RequiredProps>;
+  config: Partial<Config>;
 } & Omit<ComponentProps<typeof ReactFlagProvider>, "config">;
 
 export const FlagProvider: FC<FlagProviderProps> = ({ ...props }) => (
   <ReactFlagProvider
-    startClient={typeof window !== "undefined"}
+    startClient={typeof window !== "undefined" && !!props.config.url}
     {...props}
     config={{
+      url: props.config.url || "http://localhost",
       appName: "nextjs",
       clientKey: "none",
       disableMetrics: true,

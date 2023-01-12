@@ -196,7 +196,7 @@ export class Strategy {
     if (!constraints) {
       return true;
     }
-    // eslint-disable-next-line no-restricted-syntax
+    // @ts-ignore
     for (const constraint of constraints) {
       if (!constraint || !this.checkConstraint(constraint, context)) {
         return false;
@@ -205,7 +205,6 @@ export class Strategy {
     return true;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isEnabled(parameters: any, context: Context): boolean {
     return this.returnValue;
   }

@@ -1,14 +1,19 @@
-import { GetServerSidePropsContext, NextPageContext } from "next";
+import {
+  GetServerSidePropsContext,
+  GetStaticPropsContext,
+  NextPageContext,
+} from "next";
 import { IMutableContext } from "../other/unleash-proxy-client-js";
 import { UnleashProps, UnleashResolverResponse } from "./types";
 import { getSessionCookie, parseApiEndpoint } from "./utils";
 
 export const getUnleashProps = async (
-  ctx: NextPageContext | GetServerSidePropsContext,
+  ctx: NextPageContext | GetServerSidePropsContext | GetStaticPropsContext,
   contextOverride?: Partial<IMutableContext>,
-  apiEndpoint = `/api/unleash/resolver`
+  apiEndpoint = `/api/unleash/resolver`,
+  fetchOptions?: RequestInit
 ): Promise<UnleashProps> => {
-  const { req } = ctx;
+  const req = (ctx as NextPageContext | GetServerSidePropsContext)?.req;
   const context: Partial<IMutableContext> = {};
   if (req?.socket.remoteAddress) {
     context.remoteAddress = req.socket.remoteAddress;
@@ -27,7 +32,8 @@ export const getUnleashProps = async (
         ...context.properties,
         ...contextOverride?.properties,
       }),
-    })}`
+    })}`,
+    fetchOptions
   )
     .then((res) => res.json())
     .catch((err) => {

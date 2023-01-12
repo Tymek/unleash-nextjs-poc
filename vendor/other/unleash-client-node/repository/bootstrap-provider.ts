@@ -1,8 +1,8 @@
 import { promises } from 'fs';
-import * as fetch from 'make-fetch-happen';
+// import * as fetch from 'make-fetch-happen';
 import { ClientFeaturesResponse, FeatureInterface } from '../feature';
 import { CustomHeaders } from '../headers';
-import { buildHeaders } from '../request';
+// import { buildHeaders } from '../request';
 import { Segment } from '../strategy/strategy';
 
 export interface BootstrapProvider {
@@ -45,18 +45,18 @@ export class DefaultBootstrapProvider implements BootstrapProvider {
   }
 
   private async loadFromUrl(bootstrapUrl: string): Promise<ClientFeaturesResponse | undefined> {
-    const response = await fetch(bootstrapUrl, {
-      method: 'GET',
-      timeout: 10_000,
-      headers: buildHeaders(this.appName, this.instanceId, undefined, undefined, this.urlHeaders),
-      retry: {
-        retries: 2,
-        maxTimeout: 10_000,
-      },
-    });
-    if (response.ok) {
-      return response.json();
-    }
+    // const response = await fetch(bootstrapUrl, {
+    //   method: 'GET',
+    //   timeout: 10_000,
+    //   headers: buildHeaders(this.appName, this.instanceId, undefined, undefined, this.urlHeaders),
+    //   retry: {
+    //     retries: 2,
+    //     maxTimeout: 10_000,
+    //   },
+    // });
+    // if (response.ok) {
+    //   return response.json();
+    // }
     return undefined;
   }
 

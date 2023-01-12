@@ -1,4 +1,4 @@
-import * as fetch from 'make-fetch-happen';
+// import * as fetch from 'make-fetch-happen';
 import * as http from 'http';
 import * as https from 'https';
 import { URL } from 'url';
@@ -83,12 +83,12 @@ export const post = ({
   httpOptions,
 }: PostRequestOptions) =>
   fetch(url, {
-    timeout: timeout || 10000,
+    // timeout: timeout || 10000,
     method: 'POST',
-    agent: httpOptions?.agent || getDefaultAgent,
+    // agent: httpOptions?.agent || getDefaultAgent,
     headers: buildHeaders(appName, instanceId, undefined, 'application/json', headers),
     body: JSON.stringify(json),
-    strictSSL: httpOptions?.rejectUnauthorized,
+    // strictSSL: httpOptions?.rejectUnauthorized,
   });
 
 export const get = ({
@@ -103,12 +103,12 @@ export const get = ({
 }: GetRequestOptions) =>
   fetch(url, {
     method: 'GET',
-    timeout: timeout || 10_000,
-    agent: httpOptions?.agent || getDefaultAgent,
+    // timeout: timeout || 10_000,
+    // agent: httpOptions?.agent || getDefaultAgent,
     headers: buildHeaders(appName, instanceId, etag, undefined, headers, supportedSpecVersion),
-    retry: {
-      retries: 2,
-      maxTimeout: timeout || 10_000,
-    },
-    strictSSL: httpOptions?.rejectUnauthorized,
+    // retry: {
+    //   retries: 2,
+    //   maxTimeout: timeout || 10_000,
+    // },
+    // strictSSL: httpOptions?.rejectUnauthorized,
   });

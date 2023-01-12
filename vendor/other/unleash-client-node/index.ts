@@ -9,7 +9,7 @@ import InMemStorageProvider from './repository/storage-provider-in-mem';
 
 // exports
 export { Strategy } from './strategy/index';
-export { Context, Variant, Unleash, TagFilter, InMemStorageProvider, UnleashEvents };
+export {type Context, type Variant, Unleash, type TagFilter, InMemStorageProvider, UnleashEvents };
 export type { ClientFeaturesResponse, UnleashConfig };
 
 let instance: undefined | Unleash;

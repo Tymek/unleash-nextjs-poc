@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef } from 'react';
-import { IVariant } from 'unleash-proxy-client';
+import { IVariant } from '../unleash-proxy-client-js';
 import FlagContext from './FlagContext';
 
 const useVariant = (name: string): Partial<IVariant> => {

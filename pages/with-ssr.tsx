@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import { SimplePage } from "../components/SimplePage";
-import { FlagProvider } from "../vendor/unleash-nextjs/FlagProvider";
-import { getUnleashProps, UnleashProps } from "../vendor/unleash-nextjs";
+import { FlagProvider, getUnleashProps, UnleashProps } from "../vendor/unleash-nextjs";
 
 type Props = UnleashProps;
 

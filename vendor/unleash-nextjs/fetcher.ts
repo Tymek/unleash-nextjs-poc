@@ -13,7 +13,7 @@ export const unleashFetcher = async ({
   const appName = appNameOverride || process.env.UNLEASH_APP_NAME || "nextjs";
   if (!(baseUrl || process.env.UNLEASH_BASE_URL)) {
     console.warn(
-      'No "UNLEASH_BASE_URL" env var set. Using "http://localhost:3000" as default.'
+      'No "UNLEASH_BASE_URL" env var set. Using "http://localhost:4242/api" as default.'
     );
   }
 
@@ -38,7 +38,7 @@ export const unleashFetcher = async ({
   }
 
   const url =
-    baseUrl || process.env.UNLEASH_BASE_URL || "http://localhost:3000";
+    baseUrl || process.env.UNLEASH_BASE_URL || "http://localhost:4242/api";
 
   // TODO: fetch error - catch
   const features: ClientFeaturesResponse = await fetch(
@@ -49,7 +49,7 @@ export const unleashFetcher = async ({
     }
   ).then((res) => res.json());
 
-  const response: UnleashFetcherResponse = { ...features, appName: appName };
+  const response: UnleashFetcherResponse = { ...features, appName };
 
   return response;
 };

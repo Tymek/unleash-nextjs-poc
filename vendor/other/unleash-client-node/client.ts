@@ -111,20 +111,32 @@ export default class UnleashClient extends EventEmitter {
     yield* this.yieldSegmentConstraints(segments);
   }
 
-  *yieldSegmentConstraints(
-    segments: (Segment | undefined)[],
-  ): IterableIterator<Constraint | undefined> {
-    // eslint-disable-next-line no-restricted-syntax
+  // *yieldSegmentConstraints(
+  //   segments: (Segment | undefined)[],
+  // ): IterableIterator<Constraint | undefined> {
+  //   // eslint-disable-next-line no-restricted-syntax
+  //   for (const segment of segments) {
+  //     if (segment) {
+  //       // eslint-disable-next-line no-restricted-syntax
+  //       for (const constraint of segment?.constraints) {
+  //         yield constraint;
+  //       }
+  //     } else {
+  //       yield undefined;
+  //     }
+  //   }
+  // }
+  
+  yieldSegmentConstraints(segments: (Segment | undefined)[]) {
+    let constraints: Array<Constraint | undefined> = [];
     for (const segment of segments) {
       if (segment) {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const constraint of segment?.constraints) {
-          yield constraint;
-        }
+        constraints = constraints.concat(segment.constraints);
       } else {
-        yield undefined;
+        constraints.push(undefined);
       }
     }
+    return constraints;
   }
 
   getVariant(name: string, context: Context, fallbackVariant?: Variant): Variant {

@@ -13,6 +13,6 @@ export type UnleashResolverResponse = {
 };
 export type UnleashProps = {
   unleash: Partial<UnleashResolverResponse> & {
-    url: string;
+    url?: string;
   };
 };

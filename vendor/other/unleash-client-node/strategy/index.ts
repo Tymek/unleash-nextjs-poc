@@ -9,7 +9,7 @@ import FlexibleRolloutStrategy from './flexible-rollout-strategy';
 import { Strategy } from './strategy';
 
 export { Strategy } from './strategy';
-export { StrategyTransportInterface } from './strategy';
+export { type StrategyTransportInterface } from './strategy';
 
 export const defaultStrategies: Array<Strategy> = [
   new DefaultStrategy(),

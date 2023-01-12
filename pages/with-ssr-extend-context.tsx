@@ -1,7 +1,10 @@
 import { NextPage } from "next";
 import { SimplePage } from "../components/SimplePage";
-import FlagProvider from "../vendor/other/proxy-client-react";
-import { getUnleashProps, UnleashProps } from "../vendor/unleash-nextjs";
+import {
+  FlagProvider,
+  getUnleashProps,
+  UnleashProps,
+} from "../vendor/unleash-nextjs";
 import { Layout } from "@vercel/examples-ui";
 
 type Props = UnleashProps & {
@@ -18,11 +21,6 @@ const Page: NextPage<Props> & {
       bootstrap: unleash.toggles,
       url: unleash.url,
       context: context,
-      refreshInterval: 7,
-      bootstrapOverride: true,
-      appName: "nextjs",
-      clientKey: "none",
-      disableMetrics: true,
     }}
   >
     <SimplePage>

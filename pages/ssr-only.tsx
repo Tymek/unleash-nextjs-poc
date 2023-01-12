@@ -1,4 +1,4 @@
-import { Page } from "@vercel/examples-ui";
+import { Page, Text } from "@vercel/examples-ui";
 import { GetServerSideProps, NextPage } from "next";
 import { Toggle } from "../components/Toggle";
 import { flags, getUnleashProps } from "../vendor/unleash-nextjs";
@@ -10,6 +10,7 @@ type Props = {
 const SsrOnlyPage: NextPage<Props> = ({ flagState }) => (
   <Page>
     Flag state: <Toggle enabled={flagState} />
+    <Text>With this example you can keep the name of the feature toggle private.</Text>
   </Page>
 );
 
