@@ -1,26 +1,29 @@
-import { useFlag } from "../vendor/proxy-client-react";
-import { Layout, Page, Text, Link } from "@vercel/examples-ui";
+import { Layout, Page, Text, Link, Button, List } from "@vercel/examples-ui";
 
 export default function Home() {
-  const poc = useFlag("nextjs-poc");
-
   return (
     <Page>
       <Text variant="h2" className="mb-8">
         Feature flags with{" "}
         <Link href="https://getunleash.io/?ref=nextjs-demo">Unleash</Link>
       </Text>
-      <Text className="mb-8">
-        Flag is
-        <span
-          className={`ml-2 font-bold ${
-            poc ? "text-green-500" : "text-red-500"
-          }`}
-        >
-          {poc ? "on" : "off"}
-        </span>
-        . (<code className="font-mono">`nextjs-poc`</code>)
-      </Text>
+      <Text>Example implementations:</Text>
+      <List variant="ul" className="my-2">
+        <li>
+          <Link href="./with-ssr">
+            SSR + Client-side rendering (with{" "}
+            <code>getInitialProps</code>)
+          </Link>
+        </li>
+        <li>
+          <Link href="./static">static</Link>
+          {/* TODO: getStaticProps */}
+        </li>
+        <li>
+          <Link href="./with-ssr">middleware</Link>
+          {/* TODO: use Edge middleware to A/B test by redirecting to static page */}
+        </li>
+      </List>
     </Page>
   );
 }

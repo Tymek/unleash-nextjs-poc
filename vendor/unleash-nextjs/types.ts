@@ -1,7 +1,7 @@
-import type { ClientFeaturesResponse } from "unleash-client";
-import { UnleashClient } from "unleash-proxy-client";
+import type { ClientFeaturesResponse } from "../unleash-client-node";
+import { UnleashClient } from "../unleash-proxy-client-js";
 
-export type { ClientFeaturesResponse } from "unleash-client";
+export type { ClientFeaturesResponse } from "../unleash-client-node";
 export type UnleashFetcherResponse = ClientFeaturesResponse & {
   appName: string;
 };
