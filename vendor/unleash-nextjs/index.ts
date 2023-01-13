@@ -6,4 +6,9 @@ export { FlagProvider } from "./FlagProvider";
 export * from "./types";
 export * from "./utils";
 export { type IVariant } from "../other/unleash-proxy-client-js";
-export { useFlag, useVariant } from "../other/proxy-client-react";
+export {
+  useFlag,
+  useVariant,
+  useFlagsStatus,
+  useFlags,
+} from "../other/proxy-client-react";

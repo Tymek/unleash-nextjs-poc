@@ -11,20 +11,23 @@ export default function Home() {
       <Text>Example implementations:</Text>
       <List variant="ul" className="my-2">
         <li>
+          <Link href="./with-csr-only">Client-side rendering only</Link>
+        </li>
+        <li>
           <Link href="./with-ssr">
-            SSR + Client-side rendering (with <code>getInitialProps</code>)
+            SSR+CSR rendering (universal with rehydration)
           </Link>
         </li>
         <li>
           <Link href="./with-ssr-extend-context">
-            SSR + Client-side with additional Unleash context passed
+            SSR+CSR with additional Unleash context passed
           </Link>
         </li>
         <li>
-          <Link href="./ssr-only">Server-side rendering only</Link>
+          <Link href="./with-ssr-only">Server-side rendering only</Link>
         </li>
         <li>
-          <Link href="./static">
+          <Link href="./with-static">
             Static rendering (on build time only or ISR)
           </Link>
         </li>
