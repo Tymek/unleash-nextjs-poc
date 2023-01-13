@@ -8,7 +8,7 @@ import {
 } from "./vendor/unleash-nextjs";
 
 export const config = {
-  runtime: "edge",
+  runtime: "experimental-edge",
   matcher: "/middleware",
 };
 
