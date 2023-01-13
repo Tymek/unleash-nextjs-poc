@@ -28,8 +28,11 @@ export default function Home() {
         </li>
         <li>
           <Link href="./with-static">
-            Static rendering (on build time only or ISR)
+            Static rendering (on build time only)
           </Link>
+        </li>
+        <li>
+          <Link href="./with-isr">Incremental static rendering</Link>
         </li>
         <li>
           <Link href="./middleware">Middleware (A/B testing)</Link>
