@@ -3,9 +3,9 @@ import pkg from "../../../package.json";
 import { unleashFetcher } from "../../../vendor/unleash-nextjs/fetcher";
 import { handleError } from "../../../vendor/unleash-nextjs/utils";
 
-export const config = {
-  runtime: "experimental-edge",
-};
+// export const config = {
+//   runtime: "experimental-edge",
+// };
 
 export default async function handler(req: NextRequest) {
   const serverSecret =
