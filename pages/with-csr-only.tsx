@@ -5,11 +5,8 @@ import {
   FlagProvider,
   getUnleashProps,
   parseApiEndpoint,
-  UnleashProps,
   useFlagsStatus,
 } from "../vendor/unleash-nextjs";
-
-type Props = UnleashProps;
 
 const LoadingWrapper = () => {
   const { flagsReady } = useFlagsStatus();
@@ -21,7 +18,7 @@ const LoadingWrapper = () => {
   return <SimplePage />;
 };
 
-const CsrPage: NextPage<Props> = ({ unleash }) => (
+const CsrPage: NextPage = () => (
   <FlagProvider
     config={{
       url: parseApiEndpoint("/api/unleash/resolver"),
