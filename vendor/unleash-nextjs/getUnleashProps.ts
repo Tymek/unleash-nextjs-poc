@@ -3,8 +3,8 @@ import {
   GetStaticPropsContext,
   NextPageContext,
 } from "next";
-import { IMutableContext } from "../other/unleash-proxy-client-js";
-import { UnleashProps, UnleashResolverResponse } from "./types";
+import { IMutableContext, IToggle } from "../other/unleash-proxy-client-js";
+import { UnleashProps } from "./types";
 import { getSessionCookie, parseApiEndpoint } from "./utils";
 
 export const getUnleashProps = async (
@@ -24,7 +24,7 @@ export const getUnleashProps = async (
   }
   const resolverUrl = parseApiEndpoint(apiEndpoint, req);
 
-  const unleash: UnleashResolverResponse = await fetch(
+  const unleash: { toggles: IToggle[] } = await fetch(
     `${resolverUrl}?${new URLSearchParams({
       ...context,
       ...contextOverride,

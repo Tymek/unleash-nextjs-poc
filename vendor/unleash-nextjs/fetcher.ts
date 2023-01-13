@@ -40,7 +40,6 @@ export const unleashFetcher = async ({
   const url =
     baseUrl || process.env.UNLEASH_BASE_URL || "http://localhost:4242/api";
 
-  // TODO: fetch error - catch
   const features: ClientFeaturesResponse = await fetch(
     `${url}/client/features`,
     {

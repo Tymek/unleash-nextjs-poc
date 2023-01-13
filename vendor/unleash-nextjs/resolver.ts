@@ -1,22 +1,14 @@
 import { ClientFeaturesResponse } from "../other/unleash-client-node";
 import { ToggleEngine } from "../other/unleash-engine";
-import { UnleashResolverResponse } from "./types";
-import { safeCompare } from "./utils";
+import { IToggle } from "../other/unleash-proxy-client-js";
 
 export const unleashResolver = (
   clientFeatures: ClientFeaturesResponse,
-  context: Record<string, any> = {},
-  clientKey?: string
+  context: Record<string, any> = {}
 ) => {
-  if (process.env.UNLEASH_CLIENT_KEY) {
-    if (!clientKey || safeCompare(clientKey, process.env.UNLEASH_CLIENT_KEY)) {
-      throw new Error("Unauthorized - clientKey missing");
-    }
-  }
-
   const engine = new ToggleEngine(clientFeatures);
 
-  const output: UnleashResolverResponse["toggles"] = [];
+  const toggles: IToggle[] = [];
 
   clientFeatures.features.forEach((feature) => {
     const enabled = engine.isEnabled(feature.name, context);
@@ -26,7 +18,7 @@ export const unleashResolver = (
 
     const variant = engine.getVariant(feature.name, context);
 
-    output.push({
+    toggles.push({
       name: feature.name,
       enabled,
       impressionData: feature.impressionData,
@@ -34,5 +26,5 @@ export const unleashResolver = (
     });
   });
 
-  return output;
+  return { toggles };
 };

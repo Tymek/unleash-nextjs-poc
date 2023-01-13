@@ -28,10 +28,9 @@ export default function Home() {
             Static rendering (on build time only or ISR)
           </Link>
         </li>
-        {/* TODO: use Edge middleware to A/B test by redirecting to static page */}
-        {/* <li>
-          <Link href="./middleware">middleware</Link>
-        </li> */}
+        <li>
+          <Link href="./middleware">Middleware (A/B testing)</Link>
+        </li>
       </List>
       <Button
         className="mt-6"

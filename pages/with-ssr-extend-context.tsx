@@ -37,6 +37,7 @@ Page.getInitialProps = async (ctx) => {
       userAgent:
         (ctx?.req ? ctx?.req.headers["user-agent"] : navigator?.userAgent) ||
         "",
+      userId: 'demo-user'
       // Append with any other context fields you want to pass to Unleash
     },
   };

@@ -36,5 +36,7 @@ export const getUnleashToggles = async ({
     appName,
   });
 
-  return unleashResolver(fetcherResponse, {}, process.env.UNLEASH_CLIENT_KEY);
+  const { toggles } = unleashResolver(fetcherResponse, {});
+
+  return toggles;
 };

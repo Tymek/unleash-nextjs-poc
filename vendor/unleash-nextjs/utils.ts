@@ -75,8 +75,10 @@ export const getSessionCookie = (
   req?: NextIncomingMessage | NextRequest,
   name = "unleash-session"
 ) => {
+  const randomSessionId = `${Math.floor(Math.random() * 1_000_000_000)}`;
+
   if (typeof window !== "undefined") {
-    return jsCookies.get(name);
+    return jsCookies.get(name) || randomSessionId;
   }
 
   if ((req as NextIncomingMessage)?.headers?.cookie) {
@@ -85,5 +87,5 @@ export const getSessionCookie = (
     ];
   }
 
-  return (req as NextRequest)?.cookies.get?.(name)?.value;
+  return (req as NextRequest)?.cookies.get?.(name)?.value || randomSessionId;
 };

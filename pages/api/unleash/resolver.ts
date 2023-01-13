@@ -2,23 +2,22 @@ import type { NextRequest } from "next/server";
 import {
   UnleashFetcherResponse,
   unleashResolver,
-  UnleashResolverResponse,
   handleError,
   IMutableContext,
   parseApiEndpoint,
   getSessionCookie,
+  safeCompare,
 } from "../../../vendor/unleash-nextjs";
 
 export const config = {
-  runtime: "experimental-edge",
+  runtime: "edge",
 };
 
 export default async function handler(req: NextRequest) {
   try {
     const sessionId =
       req.nextUrl.searchParams.get("sessionId") ||
-      getSessionCookie(req) ||
-      `${Math.floor(Math.random() * 1_000_000_000)}`;
+      getSessionCookie(req);
     const remoteAddress =
       req.nextUrl.searchParams.get("remoteAddress") ||
       req.headers.get("x-forwarded-for") ||
@@ -38,13 +37,18 @@ export default async function handler(req: NextRequest) {
       `${parseApiEndpoint(apiEndpoint, req)}?serverSecret=${serverSecret}`
     ).then((res) => res.json());
 
-    const toggles = unleashResolver(fetcherResponse, context, clientKey);
+    if (process.env.UNLEASH_CLIENT_KEY) {
+      if (
+        !clientKey ||
+        safeCompare(clientKey, process.env.UNLEASH_CLIENT_KEY)
+      ) {
+        throw new Error("Unauthorized - clientKey missing");
+      }
+    }
 
-    const response: UnleashResolverResponse = {
-      toggles,
-    };
+    const resolved = unleashResolver(fetcherResponse, context);
 
-    return new Response(JSON.stringify(response), {
+    return new Response(JSON.stringify(resolved), {
       status: 200,
       headers: {
         "content-type": "application/json",
