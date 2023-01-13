@@ -1,4 +1,4 @@
-import { userInfo, hostname } from 'os';
+// import { userInfo, hostname } from 'os';
 import * as murmurHash3 from 'murmurhash3js';
 import { Context } from './context';
 
@@ -37,16 +37,14 @@ export function generateInstanceId(instanceId?: string): string {
     return instanceId;
   }
   let info;
-  try {
-    info = userInfo();
-  } catch (e) {
-    // unable to read info;
-  }
+  // try {
+  //   info = userInfo();
+  // } catch (e) {
+  //   // unable to read info;
+  // }
 
-  const prefix = info
-    ? info.username
-    : `generated-${Math.round(Math.random() * 1000000)}-${process.pid}`;
-  return `${prefix}-${hostname()}`;
+  const prefix = `generated-${Math.round(Math.random() * 1000000)}-${process.pid}`;
+  return `${prefix}-FIXME`;
 }
 
 
