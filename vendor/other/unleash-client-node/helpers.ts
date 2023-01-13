@@ -36,7 +36,7 @@ export function generateInstanceId(instanceId?: string): string {
   if (instanceId) {
     return instanceId;
   }
-  // let info;
+  let info;
   // try {
   //   info = userInfo();
   // } catch (e) {

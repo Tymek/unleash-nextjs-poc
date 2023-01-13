@@ -9,9 +9,9 @@ import {
   getSessionCookie,
 } from "../../../vendor/unleash-nextjs";
 
-// export const config = {
-//   runtime: "experimental-edge",
-// };
+export const config = {
+  runtime: "experimental-edge",
+};
 
 export default async function handler(req: NextRequest) {
   try {
